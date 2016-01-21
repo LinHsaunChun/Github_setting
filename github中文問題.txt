@@ -1,0 +1,32 @@
+﻿# 中文编码支持
+echo "export LESSCHARSET=utf-8" > $HOME/.profile
+git config --global gui.encoding utf-8
+git config --global i18n.commitencoding utf-8
+git config --global i18n.logoutputencoding utf-8
+git config --global core.quotepath false
+ 
+# 别名设置
+git config --global alias.dt difftool
+git config --global alias.mt mergetool
+ 
+# 取消 $ git gui 的中文界面，改用英文界面更易懂
+if [ -f "/share/git-gui/lib/msgs/zh_cn.msg" ]; then
+rm /share/git-gui/lib/msgs/zh_cn.msg
+fi
+
+
+# 使得在 Git Bash 中输入 ls 命令，可以正常显示中文文件名
+cat >> /etc/git-completion.bash << HEREDOC
+alias ls='ls --show-control-chars --color=auto'
+HEREDOC
+
+# Git Bash 中可以正常输入中文，比如中文的 commit log
+cat >> /etc/inputrc << HEREDOC
+set output-meta on
+set convert-meta off
+HEREDOC
+
+# LESS 设置
+cat >> /etc/profile << HEREDOC
+export LESSCHARSET=utf-8
+HEREDOC
